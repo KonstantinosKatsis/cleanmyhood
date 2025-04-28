@@ -2,7 +2,7 @@
 
 ## About the App
 
-Hood Cleaning Organizer is a web app designed to organize and promote cleaning efforts across Greece.
+CleanMyHood is a web app designed to organize and promote cleaning efforts across Greece.
 The platform allows users to report places that need cleaning by uploading an image and sharing their location (latitude and longitude).
 
 How it Works
