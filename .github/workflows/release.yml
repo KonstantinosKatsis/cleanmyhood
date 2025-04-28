@@ -20,7 +20,7 @@ jobs:
 
             - name: Read Version from Laravel Config
               run: |
-                  VERSION=$(php -r "echo json_decode(json_encode(include 'config/version.php'))->version;")
+                  VERSION=$(php -r "echo json_decode(json_encode(include 'backhood/config/version.php'))->version;")
                   echo "VERSION=$VERSION" >> $GITHUB_ENV
                   echo "Extracted version: $VERSION"
 
