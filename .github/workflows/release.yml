@@ -5,7 +5,7 @@ on:
         types:
             - closed
         branches:
-            - v2.x
+            - v1.x
 
 jobs:
     tag_release:
@@ -20,7 +20,8 @@ jobs:
 
             - name: Read Version from Laravel Config
               run: |
-                  VERSION=$(php -r "echo json_decode(json_encode(include 'config/version.php'))->version;")
+                  set -e
+                  VERSION=$(php -r "echo json_decode(json_encode(include 'backhood/config/version.php'))->version;")
                   echo "VERSION=$VERSION" >> $GITHUB_ENV
                   echo "Extracted version: $VERSION"
 
