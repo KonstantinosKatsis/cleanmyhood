@@ -13,6 +13,7 @@ return new class extends Migration {
     {
         Schema::create('hoods', function (Blueprint $table): void {
             $table->id();
+            $table->string('uuid')->unique();
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('before_image');

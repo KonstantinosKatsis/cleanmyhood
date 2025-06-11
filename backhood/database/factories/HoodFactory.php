@@ -9,6 +9,7 @@ class HoodFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => $this->faker->uuid,
             'name' => $this->faker->word,
             'latitude' => $this->faker->latitude,
             'longitude' => $this->faker->longitude,
