@@ -27,9 +27,11 @@ class HoodRequestController extends Controller
      * 
      * @return array
      */
-    public function hoods(?string $uuid = null): HoodCollection
+    public function hoods(Request $request, ?string $uuid = null): HoodCollection
     {
-        $hoods = Hood::active($uuid)->get();
+        $hoods = Hood::active($uuid)
+            ->nearby($request)
+            ->get();
 
         return new HoodCollection($hoods);
     }
