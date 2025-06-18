@@ -34,4 +34,25 @@ class Hood extends Model
                 fn($query): mixed => $query->where('uuid', $uuid)
             );
     }
+
+    public function scopeNearby($query, Request $request): mixed
+    {
+        $lattitude = $request->get('latitude', null);
+        $longitude = $request->get('longitude', null);
+        $radius = $request->get('radius', null);
+
+        if (empty($lattitude) || empty($longitude) || empty($radius)) {
+            return $query;
+        }
+
+        return $query
+            ->selectRaw("hoods.*,
+            ROUND(6371 * acos(
+                cos(radians(?)) * cos(radians(latitude)) *
+                cos(radians(longitude) - radians(?)) +
+                sin(radians(?)) * sin(radians(latitude))
+            ),5) AS distance", [$lattitude, $longitude, $lattitude])
+            ->havingRaw('distance <= ?', [$radius])
+            ->orderBy('distance');
+    }
 }

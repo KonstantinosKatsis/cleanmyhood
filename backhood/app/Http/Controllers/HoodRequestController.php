@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Data\Common\Response as CommonResponse;
+use App\Http\Requests\{
+    HoodSearchRequest,
+    HoodStoreRequest
+};
+use App\Http\Resources\HoodCollection;
 use App\Models\Hood;
-use App\Services\Hood\StoreService;
-use Illuminate\Http\JsonResponse;
+use App\Services\Hood\HoodService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HoodRequestController extends Controller
 {
-    private StoreService $storeService;
+    private HoodService $hoodService;
 
-    public function __construct(StoreService $storeService)
+    public function __construct(HoodService $hoodService)
     {
-        $this->storeService = $storeService;
+        $this->hoodService = $hoodService;
     }
 
     /**
@@ -22,68 +27,68 @@ class HoodRequestController extends Controller
      * 
      * @return array
      */
-    public function hoods(?string $uuid = null): array
+    public function hoods(HoodSearchRequest $request, ?string $uuid = null): HoodCollection
     {
-        $hoods = Hood::active($uuid)->get();
+        $hoods = Hood::active($uuid)
+            ->nearby($request)
+            ->get();
 
-        return [
-            'hoods' => $hoods,
-        ];
+        return new HoodCollection($hoods);
     }
 
     /**
-     * @param Request $request
+     * @param HoodStoreRequest $request
      * 
-     * @return JsonResponse
+     * @return CommonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(HoodStoreRequest $request): CommonResponse
     {
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
-            $hoods = $this->storeService->store($request->all())
-                ->getHoods();
+            $hoods = $this->hoodService->setHoods($request->all())
+                ->store()
+                ->getHoodData();
 
             $response = CommonResponse::from([
                 'status' => 'success',
-                'data' => $hoods,
+                'data' => (new HoodCollection($hoods))->toArray($request),
             ]);
 
-            \DB::commit();
+            DB::commit();
         } catch (\Exception $e) {
-            \DB::rollBack();
+            DB::rollBack();
 
             $response = $this->createErrorResponse($e->getMessage(), 400);
         }
 
-        return response()->json($response, 201);
+        return $response;
     }
 
     /**
      * @param string $uuid
      * 
-     * @return JsonResponse
+     * @return CommonResponse
      */
-    public function delete(string $uuid): JsonResponse
+    public function delete(string $uuid): CommonResponse
     {
-        \DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
-            $hood = Hood::where('uuid', $uuid)->firstOrFail();
-            $hood->delete();
+            $this->hoodService->delete($uuid);
 
             $response = CommonResponse::from([
                 'status' => 'success',
                 'data' => [],
             ]);
 
-            \DB::commit();
+            DB::commit();
         } catch (\Exception $e) {
-            \DB::rollBack();
+            DB::rollBack();
 
             $response = $this->createErrorResponse($e->getMessage(), 400);
         }
 
-        return response()->json($response, 200);
+        return $response;
     }
 }
