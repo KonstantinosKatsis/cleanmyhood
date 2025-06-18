@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Data\Common\Response as CommonResponse;
-use App\Http\Requests\HoodStoreRequest;
+use App\Http\Requests\{
+    HoodSearchRequest,
+    HoodStoreRequest
+};
 use App\Http\Resources\HoodCollection;
 use App\Models\Hood;
 use App\Services\Hood\HoodService;
-use Illuminate\Http\{
-    JsonResponse,
-    Request
-};
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HoodRequestController extends Controller
@@ -27,7 +27,7 @@ class HoodRequestController extends Controller
      * 
      * @return array
      */
-    public function hoods(Request $request, ?string $uuid = null): HoodCollection
+    public function hoods(HoodSearchRequest $request, ?string $uuid = null): HoodCollection
     {
         $hoods = Hood::active($uuid)
             ->nearby($request)
@@ -39,9 +39,9 @@ class HoodRequestController extends Controller
     /**
      * @param HoodStoreRequest $request
      * 
-     * @return JsonResponse
+     * @return CommonResponse
      */
-    public function store(HoodStoreRequest $request): JsonResponse
+    public function store(HoodStoreRequest $request): CommonResponse
     {
         DB::beginTransaction();
 
@@ -62,15 +62,15 @@ class HoodRequestController extends Controller
             $response = $this->createErrorResponse($e->getMessage(), 400);
         }
 
-        return response()->json($response, 201);
+        return $response;
     }
 
     /**
      * @param string $uuid
      * 
-     * @return JsonResponse
+     * @return CommonResponse
      */
-    public function delete(string $uuid): JsonResponse
+    public function delete(string $uuid): CommonResponse
     {
         DB::beginTransaction();
 
@@ -89,6 +89,6 @@ class HoodRequestController extends Controller
             $response = $this->createErrorResponse($e->getMessage(), 400);
         }
 
-        return response()->json($response, 200);
+        return $response;
     }
 }
