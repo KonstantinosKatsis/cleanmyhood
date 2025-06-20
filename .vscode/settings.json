@@ -1,0 +1,15 @@
+{
+    "phpunit.command": "docker exec -i backhood-php-1  sh -c '${php} ${phpargs} ${phpunit} ${phpunitargs}'",
+    "phpunit.php": "php -d xdebug.mode=debug -d xdebug.start_with_request=yes",
+    "phpunit.phpunit": "/var/www/html/backhood/vendor/bin/phpunit",
+    "phpunit.args": [
+        "--configuration",
+        "phpunit.xml",
+        "--testsuite",
+        "Unit,Feature",
+        "--teamcity"
+    ],
+    "phpunit.paths": {
+        "${workspaceFolder}": "/var/www/html"
+    }
+}
