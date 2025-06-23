@@ -11,5 +11,6 @@
     ],
     "phpunit.paths": {
         "${workspaceFolder}": "/var/www/html"
-    }
+    },
+    "phpunit.debuggerConfig": "Listen for Xdebug"
 }
