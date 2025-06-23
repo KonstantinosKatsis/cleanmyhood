@@ -9,12 +9,17 @@ use App\Services\Service;
 class HoodService extends Service
 {
     /**
+     * 
+     * @throws \InvalidArgumentException
+     * 
      * @return HoodService
      */
     public function store(): HoodService
     {
+        $this->validateEmptyData();
+
         foreach ($this->getHoods() as $hood) {
-            $hoodData = AddHoodData::from($hood, AddHoodData::withAuthUuid());
+            $hoodData = AddHoodData::from($hood, ['uuid' => $this->generateUuid()]);
             $hood = Hood::create($hoodData->toArray());
 
             $this->addHood($hood);

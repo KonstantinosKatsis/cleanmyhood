@@ -24,11 +24,4 @@ class AddHoodData extends Data
 
     #[Required]
     public string $uuid;
-
-    public static function withAuthUuid(): array
-    {
-        return [
-            'uuid' => \Str::uuid()->toString(),
-        ];
-    }
 }

@@ -19,8 +19,8 @@ class TestHoodSeeder extends Seeder
                 'description' => "Description for Hood $i",
                 'before_image' => "images/before_$i.png",
                 'after_image' => "",
-                'latitude' => 40.0 + $i * 0.01,
-                'longitude' => -74.0 - $i * 0.01,
+                'latitude' => $i === 6 ? 38.04427699288631 : 40.0 + $i * 0.01,
+                'longitude' => $i === 6 ? 23.65889907733886 : -74.0 - $i * 0.01,
                 'is_active' => 1
             ]);
         }

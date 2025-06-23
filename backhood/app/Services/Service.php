@@ -48,4 +48,26 @@ abstract class Service
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    protected function generateUuid(): string
+    {
+        return \Str::uuid()->toString();
+    }
+
+    /**
+     * This needs to be implemented by a Validation class.
+     * 
+     * @throws \InvalidArgumentException
+     * 
+     * @return void
+     */
+    protected function validateEmptyData(): void
+    {
+        if (empty($this->getHoods())) {
+            throw new \InvalidArgumentException('Data cannot be empty.');
+        }
+    }
 }
