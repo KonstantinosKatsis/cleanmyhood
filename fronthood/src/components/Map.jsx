@@ -7,9 +7,9 @@ import Loader from "../components/Loader";
 import customIconUrl from "../assets/marker.svg";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-function Map() {
+function Map({ nearbyHoods }) {
     const [hoods, setHoods] = useState([]);
-    const location = useGeoLocation();
+    const location = useGeoLocation(nearbyHoods);
 
     useEffect(() => {
         const fetchHoods = async () => {
@@ -20,7 +20,7 @@ function Map() {
     }, []);
 
     if (isLattitudeAndLongitudeEmpty(location)) {
-        if (!location.error) {
+        if (nearbyHoods && !location.error) {
             return <Loader />;
         }
 
@@ -42,7 +42,7 @@ function Map() {
                 location.latitude ?? 39.0742,
                 location.longitude ?? 21.8243,
             ]}
-            zoom={23}
+            zoom={location.zoom ?? 5}
             minZoom={7}
             style={{ height: "100vh", width: "100%" }}
         >
