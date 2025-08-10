@@ -1,7 +1,9 @@
 import axios from "axios";
 
-export const getHoods = async () => {
-    const res = await axios.get("/api/hoods");
+export const getHoods = async (searchParameters) => {
+    const res = await axios.get("/api/hoods", {
+        params: searchParameters,
+    });
     return res.data;
 };
 

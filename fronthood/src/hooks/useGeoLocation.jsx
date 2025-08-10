@@ -4,7 +4,6 @@ const useGeoLocation = (nearbyHoods = false) => {
     const [location, setLocation] = useState({
         latitude: null,
         longitude: null,
-        zoom: null,
         error: null,
     });
 
@@ -16,7 +15,7 @@ const useGeoLocation = (nearbyHoods = false) => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
-                setLocation({ latitude, longitude, zoom: 23 });
+                setLocation({ latitude, longitude });
             },
             (error) => {
                 setLocation({
@@ -26,7 +25,7 @@ const useGeoLocation = (nearbyHoods = false) => {
                 });
             }
         );
-    }, []);
+    }, [nearbyHoods]);
 
     return location;
 };
