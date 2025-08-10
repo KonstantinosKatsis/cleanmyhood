@@ -1,0 +1,15 @@
+/* Change arrow colors */
+.swiper-button-prev,
+.swiper-button-next {
+    color: #16a34a !important;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    color: #15803d !important;
+}
+
+.swiper-pagination {
+    margin-top: 1rem;
+    position: relative !important;
+}

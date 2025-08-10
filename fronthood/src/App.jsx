@@ -1,11 +1,28 @@
 import "./App.css";
 import "leaflet/dist/leaflet.css";
-import hoodService from "./services/HoodService";
-import Map from "./components/Map";
-import Card from "./components/Card";
+import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
+import HoodsCarousel from "./components/HoodsCarousel";
+import Loader from "./components/Loader";
+import hoodService from "./services/HoodService";
 
 function App() {
+    const [hoods, setHoods] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchHoods = async () => {
+            const result = await hoodService.searchHoods();
+            setHoods(result.data || []);
+            setLoading(false);
+        };
+        fetchHoods();
+    }, []);
+
+    if (loading) {
+        return <Loader />;
+    }
+
     return (
         <>
             <NavBar />
@@ -23,15 +40,7 @@ function App() {
                 </button>
             </section>
 
-            <div className="container">
-                <Map nearbyHoods={true} />
-            </div>
-            <div className="card">
-                <Card />
-                <button onClick={() => hoodService.searchHoods()}>
-                    Get Hoods
-                </button>
-            </div>
+            <HoodsCarousel hoods={hoods} />
         </>
     );
 }
