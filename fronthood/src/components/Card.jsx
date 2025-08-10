@@ -1,23 +1,26 @@
-export default function Card() {
+export default function Card(hood) {
     return (
-        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col h-full">
             <img
-                class="w-full"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-lFmAvBcHv3lfofE0-RN_AmzZboq4IXLGA&s"
-                alt="Sunset in the mountains"
-            ></img>
-            <div class="px-6 py-4">
-                <div class="text-center font-bold text-xl mb-2">
-                    Dirty Athens
-                </div>
-                <p class="text-gray-700 text-base">
-                    Dirty streets and trash everywhere. Let's clean up the city!
+                alt={hood.name}
+                className="h-40 w-full object-cover"
+            />
+
+            <div className="flex-1 flex flex-col">
+                <h3 className="text-lg font-semibold text-gray-800">
+                    {hood.name}
+                </h3>
+                <p className="text-sm text-gray-500 mb-2">
+                    {hood.location || "Athens, Greece"}
                 </p>
-            </div>
-            <div class="px-6 pb-2 text-center">
-                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                    Petroupoli
-                </span>
+                <p className="text-gray-600 flex-1">
+                    {hood.description ||
+                        "Join us in keeping this area clean and beautiful. Every little effort counts!"}
+                </p>
+                <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer">
+                    Click Me
+                </button>
             </div>
         </div>
     );
