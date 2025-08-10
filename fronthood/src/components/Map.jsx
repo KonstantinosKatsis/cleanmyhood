@@ -3,21 +3,26 @@ import leaflet from "leaflet";
 import { useState, useEffect } from "react";
 import hoodService from "../services/HoodService";
 import useGeoLocation from "../hooks/useGeoLocation";
-import Loader from "../components/Loader";
+import Loader from "./Loader";
+import Card from "./Card";
 import customIconUrl from "../assets/marker.svg";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-function Map({ nearbyHoods }) {
+export default function Map({ nearbyHoods, searchParameters }) {
     const [hoods, setHoods] = useState([]);
     const location = useGeoLocation(nearbyHoods);
 
     useEffect(() => {
-        const fetchHoods = async () => {
-            const result = await hoodService.searchHoods();
+        if (isLattitudeAndLongitudeEmpty(location)) {
+            return;
+        }
+
+        const fetchHoods = async (searchParameters) => {
+            const result = await hoodService.searchHoods(searchParameters);
             setHoods(result.data || []);
         };
-        fetchHoods();
-    }, []);
+        fetchHoods({ ...location, ...searchParameters });
+    }, [searchParameters, location]);
 
     if (isLattitudeAndLongitudeEmpty(location)) {
         if (nearbyHoods && !location.error) {
@@ -25,6 +30,14 @@ function Map({ nearbyHoods }) {
         }
 
         console.log(location.error);
+
+        return (
+            <div className="flex items-center justify-center">
+                <p className="text-gray-700 text-lg">
+                    Please enable location services to find nearby cleanings.
+                </p>
+            </div>
+        );
     }
 
     const customIcon = leaflet.icon({
@@ -36,14 +49,19 @@ function Map({ nearbyHoods }) {
         shadowSize: [41, 41],
     });
 
+    const greeceBounds = [
+        [34.5, 19], // SW corner lat,lng
+        [42, 29.9], // NE corner lat,lng
+    ];
+
     return (
         <MapContainer
             center={[
                 location.latitude ?? 39.0742,
                 location.longitude ?? 21.8243,
             ]}
-            zoom={location.zoom ?? 5}
-            minZoom={7}
+            zoom={Math.round(16 - Math.log2(searchParameters.radius))}
+            maxBounds={greeceBounds}
             style={{ height: "100vh", width: "100%" }}
         >
             {location.latitude && location.longitude && (
@@ -58,14 +76,7 @@ function Map({ nearbyHoods }) {
             {hoods.map((hood, index) => (
                 <Marker key={index} position={[hood.latitude, hood.longitude]}>
                     <Popup>
-                        <strong>{hood.name}</strong>
-                        <div className="mt-2">
-                            <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8nFRGJi1sm_zykNWyQ2rdYk0jKlRlLnB0aqlDwz6mz7M-BD1GKc7HO-wB0uJHMgESknE&usqp=CAU"
-                                alt={hood.name}
-                                className="w-32 h-20 object-cover rounded"
-                            />
-                        </div>
+                        <Card hood={hood} />
                     </Popup>
                 </Marker>
             ))}
@@ -81,5 +92,3 @@ function Map({ nearbyHoods }) {
 function isLattitudeAndLongitudeEmpty(location) {
     return !location.latitude || !location.longitude;
 }
-
-export default Map;
