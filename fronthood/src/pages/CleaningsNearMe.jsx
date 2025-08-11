@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import NavBar from "../components/NavBar";
-import Map from "../components/Map";
+import NearByMap from "../components/NearByMap";
+import Footer from "../components/Footer";
 
 export default function CleaningsNearMe() {
     const [sliderValue, setSliderValue] = useState(10);
@@ -48,14 +49,10 @@ export default function CleaningsNearMe() {
             </div>
             <div className="container mx-auto w-7/8 min-h-96 shadow-lg rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
                 {radius === sliderValue && (
-                    <Map
-                        nearbyHoods={true}
-                        searchParameters={{
-                            radius: radius > 100 ? 1000 : radius, // Limit to 100 km
-                        }}
-                    />
+                    <NearByMap radius={radius > 100 ? 1000 : radius} />
                 )}
             </div>
+            <Footer />
         </>
     );
 }
