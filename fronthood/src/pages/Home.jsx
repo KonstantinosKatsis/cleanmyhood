@@ -1,23 +1,35 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import NavBar from "../components/NavBar";
 import HoodsCarousel from "../components/HoodsCarousel";
 import Loader from "../components/Loader";
+import Footer from "../components/Footer";
 import hoodService from "../services/HoodService";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-    const [hoods, setHoods] = useState([]);
-    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchHoods = async () => {
-            const result = await hoodService.searchHoods();
-            setHoods(result.data || []);
-            setLoading(false);
-        };
-        fetchHoods();
-    }, []);
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["hoods"],
+        queryFn: () => hoodService.searchHoods().then((res) => res.data),
+        staleTime: 5 * 60 * 1000, // cache for 5 minutes
+    });
+
+    const hoods = data || [];
+
+    if (isLoading) {
+        return <Loader />;
+    }
+
+    if (error) {
+        return (
+            <>
+                <div className="text-center py-20 text-red-600">
+                    Error loading data. Please try again later.
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
@@ -38,7 +50,8 @@ export default function Home() {
                     Cleanings Near Me
                 </button>
             </section>
-            {loading === false ? <HoodsCarousel hoods={hoods} /> : <Loader />}
+            <HoodsCarousel hoods={hoods} />
+            <Footer />
         </>
     );
 }

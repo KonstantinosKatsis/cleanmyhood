@@ -9,7 +9,7 @@ export default function NavBar() {
                 onClick={() => navigate("/")}
                 className="text-xl font-bold text-green-700  cursor-pointer"
             >
-                Cleanmyhood
+                CleanMyHood
             </div>
             <div className="flex items-center space-x-2">
                 <div className="relative">
