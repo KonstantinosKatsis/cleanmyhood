@@ -58,6 +58,18 @@ abstract class Service
     }
 
     /**
+     * @return Service
+     */
+    abstract public function store(): Service;
+
+    /**
+     * @param string $uuid
+     * 
+     * @return Service
+     */
+    abstract public function delete(string $uuid): Service;
+
+    /**
      * This needs to be implemented by a Validation class.
      * 
      * @throws \InvalidArgumentException

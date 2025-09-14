@@ -19,7 +19,16 @@ export default function UploadImage({ hoodUuid }) {
 
         setUploading(true);
         try {
-            await hoodService.uploadCleaningImage(hoodUuid, selectedFile);
+            const response = await hoodService.uploadCleaningImage(
+                hoodUuid,
+                selectedFile
+            );
+            if (response.status !== "success") {
+                alert("Failed to upload image uploaded. Please try again.");
+
+                return;
+            }
+
             alert("Image uploaded successfully! 🎉");
             setSelectedFile(null);
             setPreview(null);

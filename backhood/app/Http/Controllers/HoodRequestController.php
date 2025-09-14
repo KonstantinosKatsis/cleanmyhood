@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Data\Common\Response as CommonResponse;
 use App\Http\Requests\{
     HoodSearchRequest,
-    HoodStoreRequest
+    HoodStoreRequest,
+    HoodUploadImageRequest
 };
 use App\Http\Resources\HoodCollection;
 use App\Models\Hood;
@@ -76,6 +77,34 @@ class HoodRequestController extends Controller
 
         try {
             $this->hoodService->delete($uuid);
+
+            $response = CommonResponse::from([
+                'status' => 'success',
+                'data' => [],
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            $response = $this->createErrorResponse($e->getMessage(), 400);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param HoodUploadImageRequest $request
+     * @param string $uuid
+     * 
+     * @return CommonResponse
+     */
+    public function uploadImage(HoodUploadImageRequest $request, string $uuid): CommonResponse
+    {
+        DB::beginTransaction();
+
+        try {
+            $this->hoodService->uploadImage($request->image, $uuid);
 
             $response = CommonResponse::from([
                 'status' => 'success',
