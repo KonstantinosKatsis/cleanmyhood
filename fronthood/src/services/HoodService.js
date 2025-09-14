@@ -18,7 +18,20 @@ const searchHoodByUuid = async (uuid) => {
     }
 };
 
+const uploadCleaningImage = async (hoodUuid, imageFile) => {
+    try {
+        const data = await requestService.uploadCleaningImage(
+            hoodUuid,
+            imageFile
+        );
+        return data || [];
+    } catch (err) {
+        return err.data || [];
+    }
+};
+
 export default {
     searchHoods,
     searchHoodByUuid,
+    uploadCleaningImage,
 };
