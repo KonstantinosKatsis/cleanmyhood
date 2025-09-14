@@ -17,6 +17,8 @@ class HoodResource extends JsonResource
         return [
             'uuid' => $this->uuid,
             'name' => $this->name,
+            'description' => $this->description,
+            'location' => $this->location,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'before_image' => $this->before_image,

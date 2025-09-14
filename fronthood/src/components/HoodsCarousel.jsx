@@ -20,7 +20,7 @@ export default function HoodsCarousel({ hoods }) {
             >
                 {hoods.map((hood, index) => (
                     <SwiperSlide key={index}>
-                        <Card {...hood} />
+                        <Card hood={hood} />
                     </SwiperSlide>
                 ))}
             </Swiper>
