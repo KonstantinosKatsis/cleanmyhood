@@ -66,7 +66,7 @@ export default function UploadImage({ hoodUuid }) {
                     <p className="mb-2 text-sm text-gray-500">
                         <span className="font-semibold">Click to upload</span>
                     </p>
-                    <p className="text-xs text-gray-400">PNG, JPG (max 5MB)</p>
+                    <p className="text-xs text-gray-400">PNG, JPG (max 10MB)</p>
                 </div>
                 <input
                     type="file"
