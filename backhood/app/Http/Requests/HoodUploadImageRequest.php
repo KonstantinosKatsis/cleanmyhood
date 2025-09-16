@@ -20,7 +20,7 @@ class HoodUploadImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'required|image|max:2048',
+            'image' => 'required|image|max:10240',
         ];
     }
 }

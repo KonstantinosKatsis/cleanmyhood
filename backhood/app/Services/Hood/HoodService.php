@@ -6,7 +6,9 @@ use App\Data\Hood\Store\AddHoodData;
 use App\Models\Hood;
 use App\Models\HoodUploadImage;
 use App\Services\Service;
+use App\Utilities\ImageHelper;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class HoodService extends Service
 {
@@ -52,7 +54,11 @@ class HoodService extends Service
     public function uploadImage(UploadedFile $image, string $uuid): HoodService
     {
         $imageName = time() . '.' . $image->extension();
-        $path = $image->store("uploaded/{$imageName}", 'private');
+
+        $compressedImage = ImageHelper::compressImage($image);
+
+        $path = "uploaded/{$uuid}/{$imageName}";
+        Storage::disk(name: 'private')->put($path, $compressedImage);
 
         HoodUploadImage::create([
             'uuid' => $uuid,
