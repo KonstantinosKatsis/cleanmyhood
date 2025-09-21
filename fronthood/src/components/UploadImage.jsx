@@ -73,6 +73,7 @@ export default function UploadImage({ hoodUuid }) {
                     accept="image/*"
                     onChange={handleFileChange}
                     className="hidden"
+                    capture="environment"
                 />
             </label>
 
