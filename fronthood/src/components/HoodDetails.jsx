@@ -1,6 +1,6 @@
 import { Map, UploadImage } from ".";
 
-export default function HoodDetails({ hood, hoods }) {
+export function HoodDetails({ hood, hoods }) {
     const location = {
         latitude: hood?.latitude || null,
         longitude: hood?.longitude || null,

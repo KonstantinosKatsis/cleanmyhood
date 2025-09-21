@@ -1,11 +1,10 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import leaflet from "leaflet";
-import Card from "./Card";
-import Loader from "./Loader";
+import { Card, Loader } from ".";
 import customIconUrl from "../assets/marker.svg";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-export default function Map({ hoods, location, radius, popup = true }) {
+export function Map({ hoods, location, radius, popup = true }) {
     const customIcon = leaflet.icon({
         iconUrl: customIconUrl,
         shadowUrl: shadowUrl,

@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { Layout, Loader, ErrorMessage, HoodsCarousel } from "../components";
-import hoodService from "../services/HoodService";
+import { searchHoods } from "../services/HoodService";
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export function Home() {
     const navigate = useNavigate();
 
     const { data, isLoading, error } = useQuery({
         queryKey: ["hoods"],
-        queryFn: () => hoodService.searchHoods().then((res) => res.data),
+        queryFn: () => searchHoods().then((res) => res.data),
         staleTime: 5 * 60 * 1000, // cache for 5 minutes
     });
 

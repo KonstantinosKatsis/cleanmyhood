@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useGeoLocation = (nearbyHoods = false) => {
+export const useGeoLocation = (nearbyHoods = false) => {
     const [location, setLocation] = useState({
         latitude: null,
         longitude: null,
@@ -30,5 +30,3 @@ const useGeoLocation = (nearbyHoods = false) => {
 
     return location;
 };
-
-export default useGeoLocation;

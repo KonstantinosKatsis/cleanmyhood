@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Card({ hood }) {
+export function Card({ hood }) {
     const navigate = useNavigate();
 
     return (

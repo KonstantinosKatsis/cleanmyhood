@@ -17,7 +17,7 @@ const getHood = async (uuid) => {
     return res.data;
 };
 
-const uploadCleaningImage = async (hoodUuid, imageFile) => {
+const uploadCleaningHoodImage = async (hoodUuid, imageFile) => {
     const url = `/api/hoods/${hoodUuid}/upload-image`;
 
     const formData = new FormData();
@@ -32,8 +32,4 @@ const uploadCleaningImage = async (hoodUuid, imageFile) => {
     return res.data;
 };
 
-export default {
-    getHoods,
-    getHood,
-    uploadCleaningImage,
-};
+export { getHoods, getHood, uploadCleaningHoodImage };
