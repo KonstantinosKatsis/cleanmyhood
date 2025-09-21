@@ -7,9 +7,15 @@ RUN apt-get update && apt-get install -y \
     unzip \
     zip \
     libzip-dev \
-    && docker-php-ext-install zip pdo pdo_mysql
+    libmagickwand-dev \
+    imagemagick \
+    && docker-php-ext-install zip pdo pdo_mysql \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pecl install xdebug-3.4.2 && docker-php-ext-enable xdebug
+RUN pecl install xdebug-3.4.2 \
+    && pecl install imagick \
+    && docker-php-ext-enable xdebug imagick
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \

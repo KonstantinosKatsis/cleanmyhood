@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{
+    Factories\HasFactory,
+    Model,
+    Relations\HasMany
+};
 use Illuminate\Http\Request;
 
 class Hood extends Model
@@ -54,5 +57,13 @@ class Hood extends Model
             ),5) AS distance", [$lattitude, $longitude, $lattitude])
             ->havingRaw('distance <= ?', [$radius])
             ->orderBy('distance');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(HoodUploadImage::class, 'hood_uuid', 'uuid');
     }
 }

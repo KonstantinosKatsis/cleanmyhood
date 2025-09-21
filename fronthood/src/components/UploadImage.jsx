@@ -19,7 +19,16 @@ export default function UploadImage({ hoodUuid }) {
 
         setUploading(true);
         try {
-            await hoodService.uploadCleaningImage(hoodUuid, selectedFile);
+            const response = await hoodService.uploadCleaningImage(
+                hoodUuid,
+                selectedFile
+            );
+            if (response.status !== "success") {
+                alert("Failed to upload image uploaded. Please try again.");
+
+                return;
+            }
+
             alert("Image uploaded successfully! 🎉");
             setSelectedFile(null);
             setPreview(null);
@@ -57,13 +66,14 @@ export default function UploadImage({ hoodUuid }) {
                     <p className="mb-2 text-sm text-gray-500">
                         <span className="font-semibold">Click to upload</span>
                     </p>
-                    <p className="text-xs text-gray-400">PNG, JPG (max 5MB)</p>
+                    <p className="text-xs text-gray-400">PNG, JPG (max 10MB)</p>
                 </div>
                 <input
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
                     className="hidden"
+                    capture="environment"
                 />
             </label>
 
