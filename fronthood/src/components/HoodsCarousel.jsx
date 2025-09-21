@@ -1,11 +1,11 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import Card from "./Card";
+import { Card } from ".";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-export default function HoodsCarousel({ hoods }) {
+export function HoodsCarousel({ hoods }) {
     return (
         <div className="max-w-5xl mx-auto py-8 px-4 cursor-grab">
             <Swiper

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import hoodService from "../services/HoodService";
+import { uploadCleaningImage } from "../services/HoodService";
 
-export default function UploadImage({ hoodUuid }) {
+export function UploadImage({ hoodUuid }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [uploading, setUploading] = useState(false);
@@ -19,10 +19,7 @@ export default function UploadImage({ hoodUuid }) {
 
         setUploading(true);
         try {
-            const response = await hoodService.uploadCleaningImage(
-                hoodUuid,
-                selectedFile
-            );
+            const response = await uploadCleaningImage(hoodUuid, selectedFile);
             if (response.status !== "success") {
                 alert("Failed to upload image uploaded. Please try again.");
 

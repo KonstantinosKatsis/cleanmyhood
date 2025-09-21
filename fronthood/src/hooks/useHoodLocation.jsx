@@ -1,1 +1,1 @@
-export default function useHoodLocation() {}
+export function useHoodLocation() {}

@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import { Layout, Loader, ErrorMessage, NearByMap } from "../components";
+import { Layout, NearByMap } from "../components";
 
-export default function CleaningsNearMe() {
+export function CleaningsNearMe() {
     const [sliderValue, setSliderValue] = useState(10);
     const [radius, setRadius] = useState(10); // in km
     const debounceTimeout = useRef(null);

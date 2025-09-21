@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import hoodService from "../services/HoodService";
-import useGeoLocation from "../hooks/useGeoLocation";
-import Map from "./Map";
+import { searchHoods } from "../services/HoodService";
+import { useGeoLocation } from "../hooks/useGeoLocation";
+import { Map } from ".";
 
-export default function NearByMap({ radius }) {
+export function NearByMap({ radius }) {
     const [hoods, setHoods] = useState([]);
     const location = useGeoLocation(true);
 
@@ -13,7 +13,7 @@ export default function NearByMap({ radius }) {
         }
 
         const fetchHoods = async (searchParameters) => {
-            const result = await hoodService.searchHoods(searchParameters);
+            const result = await searchHoods(searchParameters);
             setHoods(result.data || []);
         };
         fetchHoods({ ...location, ...{ radius: radius } });
