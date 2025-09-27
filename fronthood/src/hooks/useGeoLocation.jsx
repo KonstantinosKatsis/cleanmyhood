@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useGeoLocation = (nearbyHoods = false) => {
+export const useGeoLocation = () => {
     const [location, setLocation] = useState({
         latitude: null,
         longitude: null,
@@ -8,14 +8,10 @@ export const useGeoLocation = (nearbyHoods = false) => {
     });
 
     useEffect(() => {
-        if (!nearbyHoods) {
-            return;
-        }
-
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
-                setLocation({ latitude, longitude });
+                setLocation({ latitude, longitude, error: null });
                 console.log("Geolocation obtained:", { latitude, longitude });
             },
             (error) => {
@@ -26,7 +22,7 @@ export const useGeoLocation = (nearbyHoods = false) => {
                 });
             }
         );
-    }, [nearbyHoods]);
+    }, []);
 
     return location;
 };
