@@ -1,14 +1,25 @@
+import { useState } from "react";
 import { Map, UploadImage } from ".";
 
 export function HoodDetails({ hood, hoods }) {
+    const [copied, setCopied] = useState(false);
+
     const location = {
         latitude: hood?.latitude || null,
         longitude: hood?.longitude || null,
     };
 
+    const handleCopy = () => {
+        const coords = `${hood?.latitude}, ${hood?.longitude}`;
+        navigator.clipboard.writeText(coords);
+        setCopied(true);
+
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     return (
         <div className="max-w-7xl mx-auto p-6 flex flex-col md:flex-row gap-6">
-            <div className="flex-1 bg-white shadow-lg rounded-lg">
+            <div className="flex-1 bg-white shadow-lg rounded-lg p-2">
                 <img
                     src={getHoodImage(hood)}
                     alt={hood?.name}
@@ -23,14 +34,10 @@ export function HoodDetails({ hood, hoods }) {
                     Latitude: {hood?.latitude}, Longitude: {hood?.longitude}
                 </p>
                 <button
-                    onClick={() => {
-                        const coords = `${hood?.latitude}, ${hood?.longitude}`;
-                        navigator.clipboard.writeText(coords);
-                        alert("Coordinates copied to clipboard!");
-                    }}
-                    className="mt-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+                    onClick={handleCopy}
+                    className="mt-2 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors cursor-pointer"
                 >
-                    Copy Location
+                    {copied ? "Copied to clipboard" : "Copy Location"}
                 </button>
                 <UploadImage hoodUuid={hood.uuid} />
             </div>

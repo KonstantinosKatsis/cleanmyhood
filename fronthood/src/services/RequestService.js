@@ -17,19 +17,21 @@ const getHood = async (uuid) => {
     return res.data;
 };
 
-const uploadCleaningHoodImage = async (hoodUuid, imageFile) => {
+const uploadCleanedHoodImage = async (hoodUuid, imageFile, location) => {
     const url = `/api/hoods/${hoodUuid}/upload-image`;
 
     const formData = new FormData();
     formData.append("image", imageFile);
+    formData.append("metadata", JSON.stringify(location));
 
     const res = await axios.post(url, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },
+        location,
     });
 
     return res.data;
 };
 
-export { getHoods, getHood, uploadCleaningHoodImage };
+export { getHoods, getHood, uploadCleanedHoodImage };
