@@ -21,6 +21,7 @@ class HoodUploadImageRequest extends FormRequest
     {
         return [
             'image' => 'required|image|max:10240',
+            'metadata' => 'required',
         ];
     }
 }

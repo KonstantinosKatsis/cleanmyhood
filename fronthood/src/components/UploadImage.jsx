@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { uploadCleaningImage } from "../services/HoodService";
+import { uploadCleanedImage } from "../services/HoodService";
 import { useGeoLocation } from "../hooks/useGeoLocation";
 import { isLattitudeAndLongitudeEmpty } from "../utils/LocationHelper";
 import { PopupMessage } from ".";
@@ -40,7 +40,7 @@ export function UploadImage({ hoodUuid }) {
             setPopupMessage("Please provide your location to upload an image");
             timeoutRef.current = setTimeout(() => {
                 setShowPopup(false);
-            }, 1000);
+            }, 2000);
             return;
         }
 
@@ -49,21 +49,25 @@ export function UploadImage({ hoodUuid }) {
             setPopupMessage("Please select a file first!");
             timeoutRef.current = setTimeout(() => {
                 setShowPopup(false);
-            }, 1000);
+            }, 2000);
             return;
         }
 
         setUploading(true);
         try {
-            const response = await uploadCleaningImage(hoodUuid, selectedFile);
+            const response = await uploadCleanedImage(
+                hoodUuid,
+                selectedFile,
+                location
+            );
             if (response.status !== "success") {
                 setShowPopup(true);
                 setPopupMessage(
-                    "Failed to upload image uploaded. Please try again!"
+                    `Failed to upload image uploaded. ${response.error}`
                 );
                 timeoutRef.current = setTimeout(() => {
                     setShowPopup(false);
-                }, 1000);
+                }, 2000);
 
                 return;
             }
@@ -72,7 +76,7 @@ export function UploadImage({ hoodUuid }) {
             setPopupMessage("Image uploaded successfully! 🎉");
             timeoutRef.current = setTimeout(() => {
                 setShowPopup(false);
-            }, 2000);
+            }, 1000);
             setSelectedFile(null);
             setPreview(null);
         } catch (err) {
@@ -80,7 +84,7 @@ export function UploadImage({ hoodUuid }) {
             setPopupMessage("Failed to upload image. Please try again!");
             timeoutRef.current = setTimeout(() => {
                 setShowPopup(false);
-            }, 1000);
+            }, 2000);
         } finally {
             setUploading(false);
         }
