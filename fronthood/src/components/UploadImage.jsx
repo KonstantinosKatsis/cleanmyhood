@@ -1,10 +1,26 @@
-import { useState } from "react";
-import { uploadCleaningImage } from "../services/HoodService";
+import { useState, useRef, useEffect } from "react";
+import { uploadCleanedImage } from "../services/HoodService";
+import { useGeoLocation } from "../hooks/useGeoLocation";
+import { isLattitudeAndLongitudeEmpty } from "../utils/LocationHelper";
+import { PopupMessage } from ".";
 
 export function UploadImage({ hoodUuid }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [uploading, setUploading] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState(null);
+    const location = useGeoLocation();
+
+    const timeoutRef = useRef(null);
+
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -15,30 +31,69 @@ export function UploadImage({ hoodUuid }) {
     };
 
     const handleUpload = async () => {
-        if (!selectedFile) return alert("Please select a file first!");
+        if (isLattitudeAndLongitudeEmpty(location)) {
+            setShowPopup(true);
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+
+            setPopupMessage("Please provide your location to upload an image");
+            timeoutRef.current = setTimeout(() => {
+                setShowPopup(false);
+            }, 2000);
+            return;
+        }
+
+        if (!selectedFile) {
+            setShowPopup(true);
+            setPopupMessage("Please select a file first!");
+            timeoutRef.current = setTimeout(() => {
+                setShowPopup(false);
+            }, 2000);
+            return;
+        }
 
         setUploading(true);
         try {
-            const response = await uploadCleaningImage(hoodUuid, selectedFile);
+            const response = await uploadCleanedImage(
+                hoodUuid,
+                selectedFile,
+                location
+            );
             if (response.status !== "success") {
-                alert("Failed to upload image uploaded. Please try again.");
+                setShowPopup(true);
+                setPopupMessage(
+                    `Failed to upload image uploaded. ${response.error}`
+                );
+                timeoutRef.current = setTimeout(() => {
+                    setShowPopup(false);
+                }, 2000);
 
                 return;
             }
 
-            alert("Image uploaded successfully! 🎉");
+            setShowPopup(true);
+            setPopupMessage("Image uploaded successfully! 🎉");
+            timeoutRef.current = setTimeout(() => {
+                setShowPopup(false);
+            }, 1000);
             setSelectedFile(null);
             setPreview(null);
         } catch (err) {
             console.error(err);
-            alert("Failed to upload image. Please try again.");
+            setPopupMessage("Failed to upload image. Please try again!");
+            timeoutRef.current = setTimeout(() => {
+                setShowPopup(false);
+            }, 2000);
         } finally {
             setUploading(false);
         }
     };
 
     return (
-        <div className="mt-6 border-t pt-4">
+        <div className="mt-6 border-t pt-4 relative">
+            {showPopup && <PopupMessage message={popupMessage} />}
+
             <p className="text-gray-700 mb-2">
                 All done with the cleaning? 🎉 Snap a quick photo of the cleaned
                 area before you leave and upload it here. Once we confirm the
@@ -85,7 +140,7 @@ export function UploadImage({ hoodUuid }) {
             )}
             <button
                 onClick={handleUpload}
-                disabled={uploading}
+                disabled={uploading || isLattitudeAndLongitudeEmpty(location)}
                 className="mt-2 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition-colors cursor-pointer disabled:opacity-50"
             >
                 {uploading ? "Uploading..." : "Upload Photo"}

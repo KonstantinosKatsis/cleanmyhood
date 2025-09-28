@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data\Common\Response as CommonResponse;
+use App\Data\Hood\Location;
 use App\Http\Requests\{
     HoodSearchRequest,
     HoodStoreRequest,
@@ -10,17 +11,29 @@ use App\Http\Requests\{
 };
 use App\Http\Resources\HoodCollection;
 use App\Models\Hood;
-use App\Services\Hood\HoodService;
+use App\Services\{
+    Hood\HoodService,
+    LocationService
+};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HoodRequestController extends Controller
 {
+    /**
+     * @var HoodService
+     */
     private HoodService $hoodService;
 
-    public function __construct(HoodService $hoodService)
+    /**
+     * @var LocationService
+     */
+    private LocationService $locationService;
+
+    public function __construct(HoodService $hoodService, LocationService $locationService)
     {
         $this->hoodService = $hoodService;
+        $this->locationService = $locationService;
     }
 
     /**
@@ -104,6 +117,10 @@ class HoodRequestController extends Controller
         DB::beginTransaction();
 
         try {
+            $location = Location::from($request->metadata);
+            $this->locationService->validateLocation($location)
+                ->isNearCleaning($location, $uuid);
+
             $this->hoodService->uploadImage($request->image, $uuid);
 
             $response = CommonResponse::from([

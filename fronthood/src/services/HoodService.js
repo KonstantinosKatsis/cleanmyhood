@@ -1,4 +1,4 @@
-import { getHoods, getHood, uploadCleaningHoodImage } from "./RequestService";
+import { getHoods, getHood, uploadCleanedHoodImage } from "./RequestService";
 
 const searchHoods = async (searchParameters) => {
     try {
@@ -18,13 +18,17 @@ const searchHoodByUuid = async (uuid) => {
     }
 };
 
-const uploadCleaningImage = async (hoodUuid, imageFile) => {
+const uploadCleanedImage = async (hoodUuid, imageFile, location) => {
     try {
-        const data = await uploadCleaningHoodImage(hoodUuid, imageFile);
+        const data = await uploadCleanedHoodImage(
+            hoodUuid,
+            imageFile,
+            location
+        );
         return data || [];
     } catch (err) {
         return err.data || [];
     }
 };
 
-export { searchHoods, searchHoodByUuid, uploadCleaningImage };
+export { searchHoods, searchHoodByUuid, uploadCleanedImage };

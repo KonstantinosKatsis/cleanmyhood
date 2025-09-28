@@ -3,8 +3,10 @@
 namespace App\Services\Hood;
 
 use App\Data\Hood\Store\AddHoodData;
-use App\Models\Hood;
-use App\Models\HoodUploadImage;
+use App\Models\{
+    Hood,
+    HoodUploadImage
+};
 use App\Services\Service;
 use App\Utilities\ImageHelper;
 use Illuminate\Http\UploadedFile;

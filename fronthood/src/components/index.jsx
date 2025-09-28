@@ -9,3 +9,4 @@ export { NearByMap } from "./NearByMap";
 export { Layout } from "./Layout";
 export { HoodDetails } from "./HoodDetails";
 export { ErrorMessage } from "./ErrorMessage";
+export { PopupMessage } from "./PopupMessage";
