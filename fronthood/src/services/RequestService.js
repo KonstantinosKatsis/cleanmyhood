@@ -34,4 +34,11 @@ const uploadCleanedHoodImage = async (hoodUuid, imageFile, location) => {
     return res.data;
 };
 
-export { getHoods, getHood, uploadCleanedHoodImage };
+const store = async (body) => {
+    const url = `/api/hoods`;
+    const res = await axios.post(url, body);
+
+    return res.data;
+};
+
+export { getHoods, getHood, uploadCleanedHoodImage, store };

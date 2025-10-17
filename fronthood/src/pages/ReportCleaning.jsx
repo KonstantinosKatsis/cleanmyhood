@@ -1,154 +1,105 @@
 import { useState } from "react";
-import { Layout } from "../components";
-// import { useGeoLocation } from "../hooks/useGeoLocation";
+import { Layout, PopupMessage, ImageUploader, Loader } from "../components";
+import { useGeoLocation } from "../hooks/useGeoLocation";
+import { isLattitudeAndLongitudeEmpty } from "../utils/LocationHelper";
+import { storeHoods } from "../services/HoodService";
 
 export function ReportCleaning() {
-    const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        latitude: "",
-        longitude: "",
-        image: null,
-    });
-    const [preview, setPreview] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // const location = useGeoLocation();
+    const location = useGeoLocation();
 
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === "image") {
-            setFormData({ ...formData, image: files[0] });
-        } else {
-            setFormData({ ...formData, [name]: value });
-        }
-
+    const handleFileChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
-            setPreview(URL.createObjectURL(file));
-        }
+
+        setImageFile(file);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Simple validation
-        if (
-            !formData.name ||
-            !formData.description ||
-            // !formData.latitude ||
-            // !formData.longitude ||
-            !formData.image
-        ) {
-            alert("All fields are required!");
+        if (isLattitudeAndLongitudeEmpty(location)) {
+            setShowPopup(true);
+            setPopupMessage("Please provide your location to upload an image");
             return;
         }
+
+        if (!imageFile) {
+            setPopupMessage("Please upload an image before submitting.");
+            setShowPopup(true);
+            return;
+        }
+
+        setIsLoading(true);
+
+        const formData = new FormData();
+        formData.append("0[name]", e.target.name.value);
+        formData.append("0[description]", e.target.description.value);
+        formData.append("0[latitude]", location.latitude);
+        formData.append("0[longitude]", location.longitude);
+        formData.append("0[before_image]", imageFile);
+
+        const data = await storeHoods(formData);
+        setShowPopup(true);
+
+        if (data.status !== "success") {
+            setPopupMessage(data.error);
+            return;
+        }
+
+        setPopupMessage("Cleaning report submitted successfully. Thank you!");
+        setIsLoading(false);
     };
 
     return (
         <Layout>
+            {isLoading && <Loader />}
+            {showPopup && (
+                <PopupMessage
+                    message={popupMessage}
+                    onClose={() => setShowPopup(false)}
+                />
+            )}
             <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg my-6">
                 <h2 className="text-2xl font-bold mb-6 text-green-700">
-                    Add a New Hood
+                    Report Cleaning
                 </h2>
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    {/* Name */}
+                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div>
-                        <label className="block text-gray-700 mb-1">Name</label>
+                        <label className="text-gray-700 mb-1">Name</label>
                         <input
                             type="text"
                             name="name"
-                            value={formData.name}
-                            onChange={handleChange}
                             required
                             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                         />
                     </div>
-
-                    {/* Description */}
                     <div>
-                        <label className="block text-gray-700 mb-1">
+                        <label className="text-gray-700 mb-1">
                             Description
                         </label>
                         <textarea
                             name="description"
-                            value={formData.description}
-                            onChange={handleChange}
                             required
-                            rows={4}
-                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                            className="w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                            rows="5"
                         ></textarea>
                     </div>
-
-                    {/* Hidden Latitude/Longitude */}
-                    <input
-                        type="hidden"
-                        name="latitude"
-                        value={formData.latitude}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="hidden"
-                        name="longitude"
-                        value={formData.longitude}
-                        onChange={handleChange}
-                    />
-
-                    {/* Image Upload */}
                     <div>
-                        {preview && (
-                            <div className="mb-4">
-                                <img
-                                    src={preview}
-                                    alt="Preview"
-                                    className="w-full h-screen object-cover rounded"
-                                />
-                            </div>
-                        )}
-                        <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
-                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg
-                                    className="w-10 h-10 mb-3 text-gray-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M7 16V4m0 0L3 8m4-4l4 4M21 12h-4m0 0v8m0-8l-4 4m4-4l4 4"
-                                    ></path>
-                                </svg>
-                                <p className="mb-2 text-sm text-gray-500">
-                                    <span className="font-semibold">
-                                        Click to upload
-                                    </span>
-                                </p>
-                                <p className="text-xs text-gray-400">
-                                    PNG, JPG (max 10MB)
-                                </p>
-
-                                <input
-                                    type="file"
-                                    name="image"
-                                    accept="image/*"
-                                    onChange={handleChange}
-                                    required
-                                    className="hidden"
-                                    capture="environment"
-                                />
-                            </div>
-                        </label>
+                        <input type="hidden" name="latitude" />
+                        <input type="hidden" name="longitude" />
                     </div>
-
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer mt-2"
-                    >
-                        Submit
-                    </button>
+                    <ImageUploader handleFileChange={handleFileChange} />
+                    <div>
+                        <input
+                            type="submit"
+                            value="Submit Report"
+                            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
+                        />
+                    </div>
                 </form>
             </div>
         </Layout>

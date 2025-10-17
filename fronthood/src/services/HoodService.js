@@ -1,4 +1,9 @@
-import { getHoods, getHood, uploadCleanedHoodImage } from "./RequestService";
+import {
+    getHoods,
+    getHood,
+    uploadCleanedHoodImage,
+    store,
+} from "./RequestService";
 
 const searchHoods = async (searchParameters) => {
     try {
@@ -31,4 +36,13 @@ const uploadCleanedImage = async (hoodUuid, imageFile, location) => {
     }
 };
 
-export { searchHoods, searchHoodByUuid, uploadCleanedImage };
+const storeHoods = async (body) => {
+    try {
+        const data = await store(body);
+        return data || [];
+    } catch (err) {
+        return err.data || [];
+    }
+};
+
+export { searchHoods, searchHoodByUuid, uploadCleanedImage, storeHoods };

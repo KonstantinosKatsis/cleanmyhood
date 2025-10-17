@@ -25,6 +25,8 @@ class HoodService extends Service
         $this->validateEmptyData();
 
         foreach ($this->getHoods() as $hood) {
+            $hood['before_image'] = $this->getImagePath($hood['before_image']);
+
             $hoodData = AddHoodData::from($hood, ['uuid' => $this->generateUuid()]);
             $hood = Hood::create($hoodData->toArray());
 
@@ -68,5 +70,23 @@ class HoodService extends Service
         ]);
 
         return $this;
+    }
+
+
+    /**
+     * @param UploadedFile $image
+     * 
+     * @return string
+     */
+    private function getImagePath(UploadedFile $image): string
+    {
+        $imageName = time() . '.' . $image->extension();
+
+        $compressedImage = ImageHelper::compressImage($image);
+
+        $path = "uploaded/hood/{$imageName}";
+        Storage::disk(name: 'private')->put($path, $compressedImage);
+
+        return $path;
     }
 }
