@@ -9,7 +9,7 @@ export function Cleaning() {
     const { data, isLoading, error } = useQuery({
         queryKey: ["hood", uuid],
         queryFn: () => searchHoodByUuid(uuid).then((res) => res.data),
-        // staleTime: 5 * 60 * 1000,
+        staleTime: 5 * 60 * 1000,
     });
 
     const hood = data?.[0] || null;
@@ -18,15 +18,10 @@ export function Cleaning() {
     return (
         <Layout>
             {isLoading && <Loader />}
-            {hood ? (
-                <HoodDetails hood={hood} hoods={hoods} />
-            ) : error ? (
-                <ErrorMessage message="Error loading data." />
-            ) : (
-                <div className="max-w-7xl mx-auto p-6 flex ">
-                    <p>No data available</p>
-                </div>
+            {error && (
+                <ErrorMessage message="Error loading data. Please try again." />
             )}
+            {hood && <HoodDetails hood={hood} hoods={hoods} />}
         </Layout>
     );
 }
