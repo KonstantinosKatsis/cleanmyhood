@@ -10,3 +10,4 @@ export { Layout } from "./Layout";
 export { HoodDetails } from "./HoodDetails";
 export { ErrorMessage } from "./ErrorMessage";
 export { PopupMessage } from "./PopupMessage";
+export { ImageUploader } from "./ImageUploader";

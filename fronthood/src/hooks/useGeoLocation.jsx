@@ -7,7 +7,7 @@ export const useGeoLocation = () => {
         error: null,
     });
 
-    useEffect(() => {
+    const fetchLocation = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 const { latitude, longitude } = position.coords;
@@ -22,6 +22,29 @@ export const useGeoLocation = () => {
                 });
             }
         );
+    };
+
+    useEffect(() => {
+        fetchLocation();
+
+        if ("permissions" in navigator) {
+            navigator.permissions
+                .query({ name: "geolocation" })
+                .then((permissionStatus) => {
+                    permissionStatus.onchange = () => {
+                        if (permissionStatus.state === "granted") {
+                            fetchLocation();
+                            return;
+                        }
+
+                        setLocation({
+                            latitude: null,
+                            longitude: null,
+                            error: null,
+                        });
+                    };
+                });
+        }
     }, []);
 
     return location;

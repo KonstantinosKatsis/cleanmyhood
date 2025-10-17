@@ -21,7 +21,7 @@ class HoodStoreRequest extends BaseRequest
             '*.name' => 'required|string|max:255',
             '*.latitude' => 'required|numeric',
             '*.longitude' => 'required|numeric',
-            '*.before_image' => 'required|string',
+            '*.before_image' => 'required|file|image|mimes:jpeg,png,jpg|max:10240',
         ];
     }
 }
