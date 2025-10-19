@@ -51,6 +51,20 @@ class HoodRequestController extends Controller
     }
 
     /**
+     * @param Request $request
+     * 
+     * @return array
+     */
+    public function cleanedHoods(HoodSearchRequest $request, ?string $uuid = null): HoodCollection
+    {
+        $hoods = Hood::cleaned($uuid)
+            ->nearby($request)
+            ->get();
+
+        return new HoodCollection($hoods);
+    }
+
+    /**
      * @param HoodStoreRequest $request
      * 
      * @return CommonResponse

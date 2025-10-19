@@ -13,14 +13,14 @@ export function Footer() {
                     >
                         About
                     </a>
-                    <a
+                    {/* <a
                         href="/contact"
                         className="hover:text-green-600 transition-colors"
                     >
                         Contact
-                    </a>
+                    </a> */}
                     <a
-                        href="/privacy"
+                        href="/privacy-policy"
                         className="hover:text-green-600 transition-colors"
                     >
                         Privacy Policy
