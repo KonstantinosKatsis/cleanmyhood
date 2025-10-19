@@ -6,6 +6,8 @@ import { Cleaning } from "./pages/Cleaning";
 import { ReportCleaning } from "./pages/ReportCleaning";
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { About } from "./pages/About";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 
 export default function App() {
     const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ export default function App() {
                         path="/report-cleaning"
                         element={<ReportCleaning />}
                     />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 </Routes>
             </QueryClientProvider>
         </>

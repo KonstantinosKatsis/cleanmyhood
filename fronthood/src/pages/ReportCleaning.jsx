@@ -6,6 +6,7 @@ import { storeHoods } from "../services/HoodService";
 
 export function ReportCleaning() {
     const [imageFile, setImageFile] = useState(null);
+    const [preview, setPreview] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -16,6 +17,7 @@ export function ReportCleaning() {
         const file = e.target.files[0];
 
         setImageFile(file);
+        setPreview(URL.createObjectURL(file));
     };
 
     const handleSubmit = async (e) => {
@@ -50,8 +52,10 @@ export function ReportCleaning() {
             return;
         }
 
+        e.target.reset();
         setPopupMessage("Cleaning report submitted successfully. Thank you!");
         setIsLoading(false);
+        setPreview(null);
     };
 
     return (
@@ -92,6 +96,15 @@ export function ReportCleaning() {
                         <input type="hidden" name="latitude" />
                         <input type="hidden" name="longitude" />
                     </div>
+                    {preview && (
+                        <div className="mb-4">
+                            <img
+                                src={preview}
+                                alt="Preview"
+                                className="w-full h-2/5 object-cover rounded"
+                            />
+                        </div>
+                    )}
                     <ImageUploader handleFileChange={handleFileChange} />
                     <div>
                         <input

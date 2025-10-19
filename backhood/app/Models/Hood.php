@@ -38,6 +38,21 @@ class Hood extends Model
             );
     }
 
+    /**
+     * @param mixed $query
+     * @param string|null $uuid
+     * 
+     * @return mixed
+     */
+    public function scopeCleaned($query, ?string $uuid): mixed
+    {
+        return $query->where('is_active', 2)
+            ->when(
+                !empty($uuid),
+                fn($query): mixed => $query->where('uuid', $uuid)
+            );
+    }
+
     public function scopeNearby($query, Request $request): mixed
     {
         $lattitude = $request->get('latitude', null);
