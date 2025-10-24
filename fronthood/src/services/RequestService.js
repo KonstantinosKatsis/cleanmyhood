@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const getHoods = async (searchParameters) => {
-    // const url = uuid ? `/api/hoods/${uuid}` : `/api/hoods`;
     const url = `/api/hoods`;
     const res = await axios.get(url, {
         params: searchParameters,
@@ -11,7 +10,6 @@ const getHoods = async (searchParameters) => {
 };
 
 const getCleanedHoods = async (searchParameters) => {
-    // const url = uuid ? `/api/hoods/${uuid}` : `/api/hoods`;
     const url = `/api/cleaned-hoods`;
     const res = await axios.get(url, {
         params: searchParameters,
@@ -22,6 +20,13 @@ const getCleanedHoods = async (searchParameters) => {
 
 const getHood = async (uuid) => {
     const url = `/api/hoods/${uuid}`;
+    const res = await axios.get(url);
+
+    return res.data;
+};
+
+const getCleanedHood = async (uuid) => {
+    const url = `/api/cleaned-hoods/${uuid}`;
     const res = await axios.get(url);
 
     return res.data;
@@ -51,4 +56,11 @@ const store = async (body) => {
     return res.data;
 };
 
-export { getHoods, getHood, uploadCleanedHoodImage, store, getCleanedHoods };
+export {
+    getHoods,
+    getHood,
+    uploadCleanedHoodImage,
+    store,
+    getCleanedHoods,
+    getCleanedHood,
+};

@@ -22,6 +22,7 @@ class HoodResource extends JsonResource
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'before_image' => $this->before_image,
+            'after_image' => $this->after_image,
             'distance_in_kilometers' => $this->distance,
             'distance_in_meters' => $this->getDistanceInMeters(),
         ];

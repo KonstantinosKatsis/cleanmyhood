@@ -3,6 +3,7 @@ import "leaflet/dist/leaflet.css";
 import { Home } from "./pages/Home";
 import { CleaningsNearMe } from "./pages/CleaningsNearMe";
 import { Cleaning } from "./pages/Cleaning";
+import { Cleaned } from "./pages/Cleaned";
 import { ReportCleaning } from "./pages/ReportCleaning";
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -22,6 +23,7 @@ export default function App() {
                         element={<CleaningsNearMe />}
                     />
                     <Route path="/cleaning/:uuid" element={<Cleaning />} />
+                    <Route path="/cleaned/:uuid" element={<Cleaned />} />
                     <Route
                         path="/report-cleaning"
                         element={<ReportCleaning />}

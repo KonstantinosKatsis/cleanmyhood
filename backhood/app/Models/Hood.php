@@ -21,6 +21,7 @@ class Hood extends Model
         'latitude',
         'longitude',
         'before_image',
+        'after_image',
     ];
 
     /**
