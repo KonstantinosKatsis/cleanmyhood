@@ -4,6 +4,7 @@ import {
     uploadCleanedHoodImage,
     store,
     getCleanedHoods,
+    getCleanedHood,
 } from "./RequestService";
 
 const searchHoods = async (searchParameters) => {
@@ -27,6 +28,15 @@ const searchCleanedHoods = async (searchParameters) => {
 const searchHoodByUuid = async (uuid) => {
     try {
         const data = await getHood(uuid);
+        return data || [];
+    } catch (err) {
+        return err.data || [];
+    }
+};
+
+const searchCleanedHoodByUuid = async (uuid) => {
+    try {
+        const data = await getCleanedHood(uuid);
         return data || [];
     } catch (err) {
         return err.data || [];
@@ -61,4 +71,5 @@ export {
     uploadCleanedImage,
     storeHoods,
     searchCleanedHoods,
+    searchCleanedHoodByUuid,
 };

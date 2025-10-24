@@ -58,7 +58,6 @@ class HoodRequestController extends Controller
     public function cleanedHoods(HoodSearchRequest $request, ?string $uuid = null): HoodCollection
     {
         $hoods = Hood::cleaned($uuid)
-            ->nearby($request)
             ->get();
 
         return new HoodCollection($hoods);
