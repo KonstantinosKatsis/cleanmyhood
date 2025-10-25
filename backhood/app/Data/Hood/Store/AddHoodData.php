@@ -23,6 +23,9 @@ class AddHoodData extends Data
     public string $before_image;
 
     #[Required]
+    public int $is_active = 0;
+
+    #[Required]
     public string $uuid;
 
     /**

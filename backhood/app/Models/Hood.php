@@ -22,6 +22,7 @@ class Hood extends Model
         'longitude',
         'before_image',
         'after_image',
+        'is_active'
     ];
 
     /**
