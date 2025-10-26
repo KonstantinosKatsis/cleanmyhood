@@ -45,7 +45,7 @@ export function CleaningsNearMe() {
                         />
                     </div>
                 </div>
-                <div className="container mx-auto w-7/8 min-h-96 shadow-lg rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
+                <div className="container mx-auto w-7/8 h-lvh shadow-lg rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
                     {radius === sliderValue && (
                         <NearByMap radius={radius > 100 ? 1000 : radius} />
                     )}
