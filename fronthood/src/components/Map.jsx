@@ -43,7 +43,7 @@ export function Map({ hoods, location, radius, popup = true }) {
             ]}
             zoom={Math.round(15.45 - Math.log2(radius))}
             maxBounds={greeceBounds}
-            style={{ height: "100vh", width: "100%" }}
+            style={{ height: "100%", width: "100%" }}
         >
             {location.latitude && location.longitude && (
                 <Marker
