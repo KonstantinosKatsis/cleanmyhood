@@ -14,8 +14,6 @@ export function Cleaned() {
 
     const hood = data?.[0] || null;
     const hoods = data || [];
-    console.log("Hood Data:", data);
-
     return (
         <Layout>
             {isLoading && <Loader />}

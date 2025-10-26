@@ -12,3 +12,4 @@ export { ErrorMessage } from "./ErrorMessage";
 export { PopupMessage } from "./PopupMessage";
 export { ImageUploader } from "./ImageUploader";
 export { CleanedHood } from "./CleanedHood";
+export { SharePopup } from "./SharePopup";

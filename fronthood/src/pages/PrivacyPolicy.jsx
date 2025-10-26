@@ -26,7 +26,7 @@ export function PrivacyPolicy() {
                     this policy or how your data is handled, you can reach out
                     at:
                     <br />
-                    <strong>Email:</strong> katsis.k@outlook.com
+                    <strong>Email:</strong> info@cleanmyhood.gr
                 </p>
 
                 <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">
@@ -137,7 +137,7 @@ export function PrivacyPolicy() {
                 </p>
 
                 <p className="mb-6">
-                    <strong>Email:</strong> katsis.k@outlook.com
+                    <strong>Email:</strong> info@cleanmyhood.gr
                 </p>
 
                 <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">

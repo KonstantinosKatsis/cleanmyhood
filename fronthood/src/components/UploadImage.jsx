@@ -100,14 +100,15 @@ export function UploadImage({ hoodUuid }) {
                 cleanup, the status will be updated.
             </p>
             <ImageUploader handleFileChange={handleFileChange} />
-
             {preview && (
                 <div className="mb-4">
-                    <img
-                        src={preview}
-                        alt="Preview"
-                        className="w-full h-screen object-cover rounded"
-                    />
+                    <div className="w-full max-h-[80vh] rounded border">
+                        <img
+                            src={preview}
+                            alt="Preview"
+                            className="w-full block object-contain"
+                        />
+                    </div>
                 </div>
             )}
             <button
