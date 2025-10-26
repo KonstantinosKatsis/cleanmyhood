@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 export function Card({ hood }) {
     const navigate = useNavigate();
 
+    const STORAGE_BASE = import.meta.env.VITE_STORAGE_URL;
+
     return (
         <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col h-full">
             <img
-                src={hood.before_image}
+                src={`${STORAGE_BASE}${hood.before_image}`}
                 alt={hood.name}
                 className="h-40 w-full object-cover"
             />
@@ -40,7 +42,7 @@ export function Card({ hood }) {
                             Great job everyone!
                         </p>
                         <button
-                            onClick={() => navigate(`/cleaned/${hood.uuid}`)}
+                            onClick={() => navigate(`cleaned/${hood.uuid}`)}
                             className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer"
                         >
                             Click Me

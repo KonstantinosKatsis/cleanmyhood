@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_BASE = import.meta.env.VITE_API_URL;
+
 const getHoods = async (searchParameters) => {
-    const url = `/api/hoods`;
+    const url = `${API_BASE}/api/hoods`;
     const res = await axios.get(url, {
         params: searchParameters,
     });
@@ -10,7 +12,7 @@ const getHoods = async (searchParameters) => {
 };
 
 const getCleanedHoods = async (searchParameters) => {
-    const url = `/api/cleaned-hoods`;
+    const url = `${API_BASE}/api/cleaned-hoods`;
     const res = await axios.get(url, {
         params: searchParameters,
     });
@@ -19,21 +21,21 @@ const getCleanedHoods = async (searchParameters) => {
 };
 
 const getHood = async (uuid) => {
-    const url = `/api/hoods/${uuid}`;
+    const url = `${API_BASE}/api/hoods/${uuid}`;
     const res = await axios.get(url);
 
     return res.data;
 };
 
 const getCleanedHood = async (uuid) => {
-    const url = `/api/cleaned-hoods/${uuid}`;
+    const url = `${API_BASE}/api/cleaned-hoods/${uuid}`;
     const res = await axios.get(url);
 
     return res.data;
 };
 
 const uploadCleanedHoodImage = async (hoodUuid, imageFile, location) => {
-    const url = `/api/hoods/${hoodUuid}/upload-image`;
+    const url = `${API_BASE}/api/hoods/${hoodUuid}/upload-image`;
 
     const formData = new FormData();
     formData.append("image", imageFile);
@@ -50,7 +52,7 @@ const uploadCleanedHoodImage = async (hoodUuid, imageFile, location) => {
 };
 
 const store = async (body) => {
-    const url = `/api/hoods`;
+    const url = `${API_BASE}/api/hoods`;
     const res = await axios.post(url, body);
 
     return res.data;

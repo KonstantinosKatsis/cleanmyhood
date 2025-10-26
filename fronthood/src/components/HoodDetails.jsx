@@ -23,7 +23,7 @@ export function HoodDetails({ hood, hoods }) {
                 <img
                     src={getHoodImage(hood)}
                     alt={hood?.name}
-                    className="w-full h-1/2 object-cover rounded mb-4"
+                    className="w-full max-h-[80vh] object-cover rounded mb-4"
                 />
                 <h2 className="text-2xl font-bold mb-4 text-green-700">
                     {hood?.name || "Unknown"}
@@ -55,7 +55,9 @@ export function HoodDetails({ hood, hoods }) {
 }
 
 function getHoodImage(hood) {
+    const STORAGE_BASE = import.meta.env.VITE_STORAGE_URL;
+
     return hood.before_image
-        ? hood.before_image
+        ? `${STORAGE_BASE}${hood.before_image}`
         : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-lFmAvBcHv3lfofE0-RN_AmzZboq4IXLGA&s";
 }
