@@ -1,14 +1,15 @@
 import { useState, useRef } from "react";
 import { Layout, NearByMap } from "../components";
+import { useGeoLocation } from "../hooks/useGeoLocation";
 
 export function CleaningsNearMe() {
     const [sliderValue, setSliderValue] = useState(10);
     const [radius, setRadius] = useState(10); // in km
     const debounceTimeout = useRef(null);
+    const location = useGeoLocation();
 
     const handleChange = (e) => {
         const value = Number(e.target.value);
-        setSliderValue("∞");
 
         setSliderValue(value);
 
@@ -47,7 +48,10 @@ export function CleaningsNearMe() {
                 </div>
                 <div className="container mx-auto w-7/8 h-lvh shadow-lg rounded-lg overflow-hidden bg-gray-300 flex items-center justify-center">
                     {radius === sliderValue && (
-                        <NearByMap radius={radius > 100 ? 1000 : radius} />
+                        <NearByMap
+                            radius={radius > 100 ? 1000 : radius}
+                            location={location}
+                        />
                     )}
                 </div>{" "}
             </Layout>

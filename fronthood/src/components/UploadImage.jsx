@@ -104,6 +104,7 @@ export function UploadImage({ hoodUuid }) {
                 <div className="mb-4">
                     <div className="w-full max-h-[80vh] rounded border">
                         <img
+                            loading="lazy"
                             src={preview}
                             alt="Preview"
                             className="w-full block object-contain"
@@ -114,7 +115,7 @@ export function UploadImage({ hoodUuid }) {
             <button
                 onClick={handleUpload}
                 disabled={uploading || isLattitudeAndLongitudeEmpty(location)}
-                className="mt-2 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition-colors cursor-pointer disabled:opacity-50"
+                className="mt-2 bg-green-700 text-white py-2 px-4 rounded hover:bg-green-800 transition-colors cursor-pointer disabled:opacity-50"
             >
                 {uploading ? "Uploading..." : "Upload Photo"}
             </button>

@@ -99,6 +99,7 @@ export function ReportCleaning() {
                     {preview && (
                         <div className="mb-4">
                             <img
+                                loading="lazy"
                                 src={preview}
                                 alt="Preview"
                                 className="w-full h-2/5 object-cover rounded"
@@ -110,7 +111,7 @@ export function ReportCleaning() {
                         <input
                             type="submit"
                             value="Submit Report"
-                            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
+                            className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 cursor-pointer"
                         />
                     </div>
                 </form>

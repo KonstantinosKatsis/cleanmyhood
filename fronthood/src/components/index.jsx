@@ -1,6 +1,6 @@
 export { NavBar } from "./NavBar";
 export { Loader } from "./Loader";
-export { Map } from "./Map";
+export { default as Map } from "./Map";
 export { Footer } from "./Footer";
 export { UploadImage } from "./UploadImage";
 export { Card } from "./Card";

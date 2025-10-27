@@ -28,7 +28,7 @@ export function SharePopup() {
         <div className="relative inline-block" ref={popupRef}>
             <button
                 onClick={() => setOpen(!open)}
-                className="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-md shadow-sm"
+                className="bg-green-700 hover:bg-green-800 text-white font-medium px-4 py-2 rounded-md shadow-sm"
             >
                 Share
             </button>
