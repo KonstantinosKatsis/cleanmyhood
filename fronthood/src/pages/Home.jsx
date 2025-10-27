@@ -52,7 +52,7 @@ export function Home() {
                 </p>
                 <button
                     onClick={() => navigate("/cleanings-near-me")}
-                    className="bg-green-600 text-white px-6 py-3 rounded-full text-lg hover:bg-green-700 transition-colors cursor-pointer"
+                    className="bg-green-700 text-white px-6 py-3 rounded-full text-lg hover:bg-green-800 transition-colors cursor-pointer"
                 >
                     Cleanings Near Me
                 </button>

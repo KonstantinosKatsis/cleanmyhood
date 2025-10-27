@@ -23,7 +23,7 @@ export function NavBar() {
                 </div> */}
                 <button
                     onClick={() => navigate("/report-cleaning")}
-                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer"
+                    className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 transition-colors cursor-pointer"
                 >
                     Report a Cleaning
                 </button>

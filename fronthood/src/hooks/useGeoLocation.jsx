@@ -19,6 +19,10 @@ export const useGeoLocation = () => {
                     longitude: null,
                     error: `Error getting geolocation: ${error.message}`,
                 });
+            },
+            {
+                enableHighAccuracy: false,
+                maximumAge: 10000,
             }
         );
     };

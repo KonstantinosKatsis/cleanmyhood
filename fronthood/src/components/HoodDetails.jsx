@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Map, UploadImage, SharePopup } from ".";
+import { useState, Suspense, lazy } from "react";
+import { UploadImage, SharePopup } from ".";
+
+const LazyMap = lazy(() => import("./Map"));
 
 export function HoodDetails({ hood, hoods }) {
     const [copied, setCopied] = useState(false);
@@ -24,6 +26,9 @@ export function HoodDetails({ hood, hoods }) {
                     src={getHoodImage(hood)}
                     alt={hood?.name}
                     className="w-full max-h-[80vh] object-cover rounded mb-4"
+                    width="800"
+                    height="600"
+                    fetchPriority="high"
                 />
                 <h2 className="text-2xl font-bold mb-4 text-green-700">
                     {hood?.name || "Unknown"}
@@ -49,12 +54,20 @@ export function HoodDetails({ hood, hoods }) {
             </div>
 
             <div className="md:flex-1 shadow-lg rounded-lg overflow-hidden bg-gray-300 h-[80vh] md:h-auto flex">
-                <Map
-                    hoods={hoods}
-                    location={location}
-                    radius={10}
-                    popup={false}
-                />
+                <Suspense
+                    fallback={
+                        <div className="flex m-auto text-gray-600">
+                            Loading map...
+                        </div>
+                    }
+                >
+                    <LazyMap
+                        hoods={hoods}
+                        location={location}
+                        radius={10}
+                        popup={false}
+                    />
+                </Suspense>
             </div>
         </div>
     );

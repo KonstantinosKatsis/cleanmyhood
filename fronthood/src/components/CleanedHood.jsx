@@ -23,6 +23,7 @@ export function CleanedHood({ hood }) {
                 >
                     <div className="relative">
                         <img
+                            loading="lazy"
                             src={`${STORAGE_BASE}${hood.before_image}`}
                             alt={`${hood?.name} before`}
                             className="w-full h-72 object-cover"
@@ -46,11 +47,12 @@ export function CleanedHood({ hood }) {
                 >
                     <div className="relative">
                         <img
+                            loading="lazy"
                             src={`${STORAGE_BASE}${hood.after_image}`}
                             alt={`${hood?.name} after`}
                             className="w-full h-72 object-cover"
                         />
-                        <span className="absolute top-4 left-4 bg-green-600 text-white text-sm font-semibold px-3 py-1 rounded-md shadow">
+                        <span className="absolute top-4 left-4 bg-green-700 text-white text-sm font-semibold px-3 py-1 rounded-md shadow">
                             After
                         </span>
                     </div>

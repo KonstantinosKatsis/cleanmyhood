@@ -4,7 +4,7 @@ import { Card, Loader } from ".";
 import customIconUrl from "../assets/marker.svg";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 
-export function Map({ hoods, location, radius, popup = true }) {
+export default function Map({ hoods, location, radius, popup = true }) {
     const customIcon = leaflet.icon({
         iconUrl: customIconUrl,
         shadowUrl: shadowUrl,

@@ -8,6 +8,7 @@ export function Card({ hood }) {
     return (
         <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col h-full">
             <img
+                loading="lazy"
                 src={`${STORAGE_BASE}${hood.before_image}`}
                 alt={hood.name}
                 className="h-40 w-full object-cover"
@@ -28,7 +29,7 @@ export function Card({ hood }) {
                         </p>
                         <button
                             onClick={() => navigate(`/cleaning/${hood.uuid}`)}
-                            className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer"
+                            className="mt-4 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 transition-colors cursor-pointer"
                         >
                             Click Me
                         </button>
@@ -43,7 +44,7 @@ export function Card({ hood }) {
                         </p>
                         <button
                             onClick={() => navigate(`cleaned/${hood.uuid}`)}
-                            className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer"
+                            className="mt-4 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 transition-colors cursor-pointer"
                         >
                             Click Me
                         </button>
