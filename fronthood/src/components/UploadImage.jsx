@@ -114,7 +114,7 @@ export function UploadImage({ hoodUuid }) {
             )}
             <button
                 onClick={handleUpload}
-                disabled={uploading || isLattitudeAndLongitudeEmpty(location)}
+                disabled={uploading}
                 className="mt-2 bg-green-700 text-white py-2 px-4 rounded hover:bg-green-800 transition-colors cursor-pointer disabled:opacity-50"
             >
                 {uploading ? "Uploading..." : "Upload Photo"}
