@@ -19,6 +19,20 @@ export function HoodDetails({ hood, hoods }) {
         setTimeout(() => setCopied(false), 2000);
     };
 
+    const handleOpenGPS = () => {
+        const latitude = hood?.latitude;
+        const longitude = hood?.longitude;
+        const label = encodeURIComponent(`${hood?.name}`);
+
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+        const url = isIOS
+            ? `maps://maps.apple.com/?q=${label}&ll=${latitude},${longitude}`
+            : `https://www.google.com/maps?q=${latitude},${longitude}(${label})`;
+
+        window.location.href = url; // Open the appropriate maps app
+    };
+
     return (
         <div className="max-w-7xl mx-auto p-6 flex flex-col md:flex-row gap-6">
             <div className="flex-1 bg-white shadow-lg rounded-lg p-2">
@@ -40,12 +54,23 @@ export function HoodDetails({ hood, hoods }) {
                 </p>
 
                 <div className="flex mt-2 gap-2">
-                    <button
-                        onClick={handleCopy}
-                        className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors cursor-pointer"
-                    >
-                        {copied ? "Copied to clipboard" : "Copy Location"}
-                    </button>
+                    {/Mobi|Android|iPhone|iPad|iPod/i.test(
+                        navigator.userAgent
+                    ) ? (
+                        <button
+                            onClick={handleOpenGPS}
+                            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors cursor-pointer"
+                        >
+                            Open in Maps
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleCopy}
+                            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors cursor-pointer"
+                        >
+                            {copied ? "Copied to clipboard" : "Copy Location"}
+                        </button>
+                    )}
 
                     <SharePopup />
                 </div>
