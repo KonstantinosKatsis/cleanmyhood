@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Layout, PopupMessage, ImageUploader, Loader } from "../components";
+import {
+    Layout,
+    PopupMessage,
+    ImageUploader,
+    Loader,
+    PrivacyPolicy,
+} from "../components";
 import { useGeoLocation } from "../hooks/useGeoLocation";
 import { isLattitudeAndLongitudeEmpty } from "../utils/LocationHelper";
 import { storeHoods } from "../services/HoodService";
@@ -73,8 +79,12 @@ export function ReportCleaning() {
                 </h2>
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                     <div>
-                        <label className="text-gray-700 mb-1">Name</label>
+                        <label htmlFor="name" className="text-gray-700 mb-1">
+                            Name
+                        </label>
+                        <span className="px-1 text-red-500">*</span>
                         <input
+                            id="name"
                             type="text"
                             name="name"
                             required
@@ -82,19 +92,22 @@ export function ReportCleaning() {
                         />
                     </div>
                     <div>
-                        <label className="text-gray-700 mb-1">
+                        <label
+                            htmlFor="description"
+                            className="text-gray-700 mb-1"
+                        >
                             Description
                         </label>
                         <textarea
+                            id="description"
                             name="description"
-                            required
                             className="w-full border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                             rows="5"
                         ></textarea>
                     </div>
                     <div>
-                        <input type="hidden" name="latitude" />
-                        <input type="hidden" name="longitude" />
+                        <input type="hidden" name="latitude" id="latitude" />
+                        <input type="hidden" name="longitude" id="longitude" />
                     </div>
                     {preview && (
                         <div className="mb-4">
@@ -107,11 +120,13 @@ export function ReportCleaning() {
                         </div>
                     )}
                     <ImageUploader handleFileChange={handleFileChange} />
+                    <PrivacyPolicy />
                     <div>
                         <input
                             type="submit"
                             value="Submit Report"
                             className="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 cursor-pointer"
+                            id="submit"
                         />
                     </div>
                 </form>
