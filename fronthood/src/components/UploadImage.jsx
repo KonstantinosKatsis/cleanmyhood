@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { uploadCleanedImage } from "../services/HoodService";
 import { useGeoLocation } from "../hooks/useGeoLocation";
 import { isLattitudeAndLongitudeEmpty } from "../utils/LocationHelper";
-import { PopupMessage, ImageUploader } from ".";
+import { PopupMessage, ImageUploader, PrivacyPolicy } from ".";
 
 export function UploadImage({ hoodUuid }) {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -112,6 +112,7 @@ export function UploadImage({ hoodUuid }) {
                     </div>
                 </div>
             )}
+            <PrivacyPolicy />
             <button
                 onClick={handleUpload}
                 disabled={uploading}

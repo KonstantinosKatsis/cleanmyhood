@@ -8,7 +8,9 @@ use Intervention\Image\ImageManager;
 
 class ImageHelper
 {
-    public const MAXIMUM_IMAGE_SIZE = 500;
+    public const MAXIMUM_IMAGE_SIZE = 150;
+    public const MAXIMUM_IMAGE_WIDTH = 800;
+    public const IMAGE_QUALITY = 75;
 
     /**
      * @param UploadedFile $uploadedImage
@@ -17,25 +19,31 @@ class ImageHelper
      */
     public static function compressImage(UploadedFile $uploadedImage): string
     {
-        $sizeKB = $uploadedImage->getSize() / 1024;
-        if (self::isLessThanMaximumSize($sizeKB)) {
-            return $uploadedImage->get();
-        }
-
         $manager = new ImageManager(new Driver());
 
         $image = $manager->read($uploadedImage->getRealPath());
-        $quality = 75;
+        if ($image->width() > self::MAXIMUM_IMAGE_WIDTH) {
+            $image->scale(self::MAXIMUM_IMAGE_WIDTH);
+        }
+
+        $encoded = (string) $image->encodeByExtension($uploadedImage->extension());
+        $sizeKB = strlen($encoded) / 1024;
+
+        if (self::isLessThanMaximumSize($sizeKB)) {
+            return (string) $image->encodeByExtension($uploadedImage->extension());
+        }
+
+        $quality = self::IMAGE_QUALITY;
 
         do {
             $compressed = (string) $image->encodeByExtension(
                 $uploadedImage->extension(),
-                quality: $quality
+                $quality
             );
 
             $sizeKB = strlen($compressed) / 1024;
             $quality -= 5;
-        } while ($sizeKB > self::MAXIMUM_IMAGE_SIZE);
+        } while ($sizeKB > self::MAXIMUM_IMAGE_SIZE && $quality > 50);
 
         return $compressed;
     }

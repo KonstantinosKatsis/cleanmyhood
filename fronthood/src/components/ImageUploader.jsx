@@ -16,13 +16,14 @@ export function ImageUploader({ handleFileChange }) {
                         d="M7 16V4m0 0L3 8m4-4l4 4M21 12h-4m0 0v8m0-8l-4 4m4-4l4 4"
                     ></path>
                 </svg>
-                <p className="mb-2 text-sm text-gray-500">
+                <p className="mb-2 text-sm text-gray-700">
                     <span className="font-semibold">Click to upload</span>
                 </p>
-                <p className="text-xs text-gray-400">PNG, JPG (max 10MB)</p>
+                <p className="text-xs text-gray-700">PNG, JPG (max 10MB)</p>
             </div>
 
             <input
+                id="file-upload"
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
