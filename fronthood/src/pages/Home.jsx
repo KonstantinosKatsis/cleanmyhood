@@ -1,7 +1,6 @@
 import { Layout, Loader, ErrorMessage, HoodsCarousel } from "../components";
 import { useNavigate } from "react-router-dom";
-import { useHoods } from "../hooks/useHoods";
-import { useCleanedHoods } from "../hooks/useCleanedHoods";
+import { useHoods, useCleanedHoods } from "../hooks";
 
 export function Home() {
     const navigate = useNavigate();
@@ -41,7 +40,7 @@ export function Home() {
                             Cleanings Near Me
                         </button>
                     </section>
-                    <HoodsCarousel hoods={hoods} />
+                    <HoodsCarousel hoods={hoods || []} />
                     <section className="text-center max-w-2xl mx-auto px-4 py-8">
                         <h2 className="text-2xl font-bold mb-4">
                             Discover Cleaned Hoods
@@ -54,7 +53,7 @@ export function Home() {
                             environment.
                         </p>
                     </section>
-                    <HoodsCarousel hoods={cleanedHoods} />
+                    <HoodsCarousel hoods={cleanedHoods || []} />
                 </>
             )}
         </Layout>

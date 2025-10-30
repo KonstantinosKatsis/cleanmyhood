@@ -1,12 +1,11 @@
 import { useState } from "react";
+import { HoodImageCard } from "../components";
 
 export function CleanedHood({ hood }) {
     const [selectedImage, setSelectedImage] = useState(null);
 
     const openImage = (imgUrl) => setSelectedImage(imgUrl);
     const closeImage = () => setSelectedImage(null);
-
-    const STORAGE_BASE = import.meta.env.VITE_STORAGE_URL;
 
     return (
         <div className="max-w-6xl mx-auto p-8">
@@ -15,61 +14,25 @@ export function CleanedHood({ hood }) {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div
-                    className="bg-white rounded-xl shadow-md overflow-hidden transform transition duration-300 hover:scale-[1.02] cursor-pointer"
-                    onClick={() =>
-                        openImage(`${STORAGE_BASE}${hood.before_image}`)
-                    }
-                >
-                    <div className="relative">
-                        <img
-                            loading="lazy"
-                            src={`${STORAGE_BASE}${hood.before_image}`}
-                            alt={`${hood?.name} before`}
-                            className="w-full h-72 object-cover"
-                        />
-                        <span className="absolute top-4 left-4 bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded-md shadow">
-                            Before
-                        </span>
-                    </div>
-                    <div className="p-4">
-                        <p className="text-gray-600 text-sm">
-                            This is how the hood looked before cleaning.
-                        </p>
-                    </div>
-                </div>
+                <HoodImageCard
+                    image={hood.before_image}
+                    label="Before"
+                    title={hood.name}
+                    description="This is how the hood looked before cleaning."
+                    openImage={openImage}
+                />
 
-                <div
-                    className="bg-white rounded-xl shadow-md overflow-hidden transform transition duration-300 hover:scale-[1.02] cursor-pointer"
-                    onClick={() =>
-                        openImage(`${STORAGE_BASE}${hood.after_image}`)
-                    }
-                >
-                    <div className="relative">
-                        <img
-                            loading="lazy"
-                            src={`${STORAGE_BASE}${hood.after_image}`}
-                            alt={`${hood?.name} after`}
-                            className="w-full h-72 object-cover"
-                        />
-                        <span className="absolute top-4 left-4 bg-green-700 text-white text-sm font-semibold px-3 py-1 rounded-md shadow">
-                            After
-                        </span>
-                    </div>
-                    <div className="p-4">
-                        <p className="text-gray-600 text-sm">
-                            After a professional clean — spotless and safe.
-                        </p>
-                    </div>
-                </div>
+                <HoodImageCard
+                    image={hood.after_image}
+                    label="After"
+                    title={hood.name}
+                    description="This is how the hood looks after cleaning."
+                    openImage={openImage}
+                />
             </div>
 
             {selectedImage && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center"
-                    style={{ zIndex: 10002 }}
-                    onClick={closeImage}
-                >
+                <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-[1002]">
                     <img
                         src={selectedImage}
                         alt="Fullscreen"
