@@ -4,8 +4,15 @@ export function PrivacyPolicy() {
             <p className="mb-2">
                 ⚠️ To submit a valid cleaning, please allow access to your
                 <strong> location</strong>. Your location is used only to verify
-                the area cleaned and will{" "}
-                <strong>not be stored or shared</strong> for any other purpose.
+                the area and to display cleaning locations on the map for others
+                to see.
+            </p>
+            <p className="mb-2">
+                We do <strong>store</strong> the cleaning location data, but we
+                do{" "}
+                <strong>not collect or store any personal information</strong>
+                (e.g., names, accounts, or device identifiers). Locations are
+                stored anonymously and are not linked to any specific user.
             </p>
             <p>
                 We comply with the GDPR, and you can read more about how we

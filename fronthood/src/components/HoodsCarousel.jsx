@@ -18,8 +18,8 @@ export function HoodsCarousel({ hoods }) {
                     1024: { slidesPerView: 3 },
                 }}
             >
-                {hoods.map((hood, index) => (
-                    <SwiperSlide key={index}>
+                {hoods.map((hood) => (
+                    <SwiperSlide key={hood.uuid}>
                         <Card hood={hood} />
                     </SwiperSlide>
                 ))}

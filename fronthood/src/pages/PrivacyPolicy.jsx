@@ -55,6 +55,17 @@ export function PrivacyPolicy() {
                 </ul>
 
                 <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">
+                    2.1 Public Display of Location Data
+                </h2>
+                <p className="mb-6">
+                    The location coordinates submitted with a cleaning report
+                    are stored and displayed publicly on the map so that others
+                    can view reported or cleaned areas. These coordinates are{" "}
+                    <strong>not linked to any personal identity</strong> and are
+                    used solely for displaying cleaning activity.
+                </p>
+
+                <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">
                     3. Why the Data Is Collected
                 </h2>
                 <p className="mb-6">
@@ -67,6 +78,19 @@ export function PrivacyPolicy() {
                     <li>To show cleaned locations once verified.</li>
                     <li>To improve the app’s reliability and prevent abuse.</li>
                 </ul>
+
+                <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">
+                    3.1 Legal Basis for Processing (GDPR)
+                </h2>
+                <p className="mb-6">
+                    CleanMyHood processes limited personal data (such as
+                    location coordinates and optional uploaded photos) based on
+                    your <strong>consent</strong> under Article 6(1)(a) of the
+                    GDPR. By submitting a report or allowing location access,
+                    you consent to this data being processed for the purposes
+                    described above. You may withdraw your consent at any time
+                    by contacting the developer or disabling location sharing.
+                </p>
 
                 <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">
                     4. Who Has Access to the Data
@@ -138,6 +162,19 @@ export function PrivacyPolicy() {
 
                 <p className="mb-6">
                     <strong>Email:</strong> info@cleanmyhood.gr
+                </p>
+
+                <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">
+                    6.1 Data Hosting and Storage
+                </h2>
+                <p className="mb-6">
+                    All data related to CleanMyHood is securely hosted by{" "}
+                    <strong>Hostinger International Ltd.</strong>, a company
+                    based in Lithuania (European Union). Hostinger’s servers and
+                    infrastructure comply with{" "}
+                    <strong>GDPR data protection standards</strong>, and all
+                    data is stored within the European Union. No data is
+                    intentionally transferred or processed outside the EU.
                 </p>
 
                 <h2 className="text-2xl font-semibold text-green-700 mt-8 mb-3">

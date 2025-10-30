@@ -9,59 +9,49 @@ import {
 
 const searchHoods = async (searchParameters) => {
     try {
-        const data = await getHoods(searchParameters);
-        return data || [];
+        return await getHoods(searchParameters);
     } catch (err) {
-        return err.data || [];
+        throw err.response?.data || err;
     }
 };
 
 const searchCleanedHoods = async (searchParameters) => {
     try {
-        const data = await getCleanedHoods(searchParameters);
-        return data || [];
+        return await getCleanedHoods(searchParameters);
     } catch (err) {
-        return err.data || [];
+        throw err.response.data || err;
     }
 };
 
 const searchHoodByUuid = async (uuid) => {
     try {
-        const data = await getHood(uuid);
-        return data || [];
+        return await getHood(uuid);
     } catch (err) {
-        return err.data || [];
+        throw err.response.data || err;
     }
 };
 
 const searchCleanedHoodByUuid = async (uuid) => {
     try {
-        const data = await getCleanedHood(uuid);
-        return data || [];
+        return await getCleanedHood(uuid);
     } catch (err) {
-        return err.data || [];
+        throw err.response.data || err;
     }
 };
 
 const uploadCleanedImage = async (hoodUuid, imageFile, location) => {
     try {
-        const data = await uploadCleanedHoodImage(
-            hoodUuid,
-            imageFile,
-            location
-        );
-        return data || [];
+        return await uploadCleanedHoodImage(hoodUuid, imageFile, location);
     } catch (err) {
-        return err.data || [];
+        throw err.response.data || err;
     }
 };
 
 const storeHoods = async (body) => {
     try {
-        const data = await store(body);
-        return data || [];
+        return await store(body);
     } catch (err) {
-        return err.data || [];
+        throw err.response.data || err;
     }
 };
 

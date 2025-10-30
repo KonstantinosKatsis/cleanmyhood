@@ -14,7 +14,7 @@ export function NearByMap({ radius, location }) {
 
         const fetchHoods = async (searchParameters) => {
             const result = await searchHoods(searchParameters);
-            setHoods(result.data || []);
+            setHoods(result.data.data || []);
         };
         fetchHoods({ ...location, ...{ radius: radius } });
     }, [radius, location]);
