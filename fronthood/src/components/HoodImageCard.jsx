@@ -15,8 +15,8 @@ export function HoodImageCard({ image, label, title, description, openImage }) {
                         className="w-full h-72 object-cover"
                     />
                     <span
-                        className={`absolute top-4 left-4 bg-${
-                            label === "Before" ? "red-600" : "green-700"
+                        className={`absolute top-4 left-4 ${
+                            label === "Before" ? "bg-red-700" : "bg-green-700"
                         } text-white text-sm font-semibold px-3 py-1 rounded-md shadow`}
                     >
                         {label}
