@@ -72,7 +72,7 @@ const Map = React.memo(function Map({ hoods, location, radius, popup = true }) {
                     position={[hood.latitude, hood.longitude]}
                 >
                     {popup && (
-                        <Popup>
+                        <Popup className="w-2xs">
                             <Card hood={hood} />
                         </Popup>
                     )}

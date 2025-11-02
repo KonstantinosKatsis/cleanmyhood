@@ -112,7 +112,11 @@ export function UploadImage({ hoodUuid }) {
                     </div>
                 </div>
             )}
-            <PrivacyPolicy />
+
+            <div className="pt-4">
+                <PrivacyPolicy />
+            </div>
+
             <button
                 onClick={handleUpload}
                 disabled={uploading}

@@ -4,10 +4,7 @@ export function NavBar() {
     const navigate = useNavigate();
 
     return (
-        <nav
-            className="bg-white shadow-md px-6 py-3 flex justify-between items-center fixed w-full top-0"
-            style={{ zIndex: 1001 }}
-        >
+        <nav className="bg-white shadow-md px-6 py-3 flex justify-between items-center fixed w-full top-0 z-[1001]">
             <button
                 onClick={() => navigate("/")}
                 className="text-xl font-bold text-green-700  cursor-pointer"
